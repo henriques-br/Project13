@@ -53,7 +53,27 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    //==============================================================================
+    // AHENRIQU: Started programming for Project13
+    // basic dsp (not prepared or used)
+    enum class DSP_Option
+    {
+        Phase,
+        Chorus,
+        Overdrive,
+        LadderFilter,
+        END_OF_LIST
+    };
+    
 private:
+    //==============================================================================
+    // AHENRIQU: Started programming for Project13
+    // https://www.youtube.com/watch?v=fmrLo9OF8bE&list=PLL4Pwd7fD7npBIpgp6Hwzod1PkjsbI0dW&index=54
+    // 25:08
+    juce::dsp::Phaser<float> phaser;
+    juce::dsp::Chorus<float> chorus;
+    juce::dsp::LadderFilter<float> overdrive, ladderFilter;
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Project13AudioProcessor)
 };
