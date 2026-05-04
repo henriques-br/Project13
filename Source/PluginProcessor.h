@@ -89,7 +89,7 @@ public:
      Chorus
      Rate: hz
      Depth: 0 to 1
-     Center delay: hz
+     Center delay: ms (1 to 100)
      Feedback: -1 to +1
      Mix: 0 to 1
      */
