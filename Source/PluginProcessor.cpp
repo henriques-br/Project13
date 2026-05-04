@@ -9,6 +9,19 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+// Parameter Name
+auto getPhaserRateName() { return juce::String("Phaser RateHz"); }
+auto getPhaserDepthName() { return juce::String("Phaser Depth %"); }
+auto getPhaserCenterFreqName() { return juce::String("Phaser Center FreqHz"); }
+auto getPhaserFeedbackName() { return juce::String("Phaser Feedback %"); }
+auto getPhaserMixName() { return juce::String("Phaser Mix %"); }
+
+auto getChorusRateName() { return juce::String("Chorus RateHz"); }
+auto getChorusDepthName() { return juce::String("Chorus Depth %"); }
+auto getChorusCenterDelayName() { return juce::String("Chorus Center Delay Ms"); }
+auto getChorusFeedbackName() { return juce::String("Chorus Feedback %"); }
+auto getChorusMixName() { return juce::String("Chorus Mix %"); }
+
 //==============================================================================
 Project13AudioProcessor::Project13AudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -22,6 +35,55 @@ Project13AudioProcessor::Project13AudioProcessor()
                        )
 #endif
 {
+    //=======================================================================
+    // Phaser
+    //=======================================================================
+    auto phaserParams = std::array
+    {
+        &phaserRateHz,
+        &phaserDepthPercent,
+        &phaserCenterFreqHz,
+        &phaserFeedbackPercent,
+        &phaserMixPercent
+    };
+    
+    auto phaserFuncs = std::array
+    {
+        &getPhaserRateName,
+        &getPhaserDepthName,
+        &getPhaserCenterFreqName,
+        &getPhaserFeedbackName,
+        &getPhaserMixName
+    };
+    //=======================================================================
+    // Chorus
+    //=======================================================================
+    auto chorusParams = std::array
+    {
+        &chorusRateHz,
+        &chorusDepthPercent,
+        &chorusCenterDelayMs,
+        &chorusFeedbackPercent,
+        &chorusMixPercent
+    };
+    
+    auto chorusFuncs = std::array
+    {
+        &getChorusRateName,
+        &getChorusDepthName,
+        &getChorusCenterDelayName,
+        &getChorusFeedbackName,
+        &getChorusMixName
+    };
+
+    
+    for( size_t i = 0; i < phaserParams.size(); i++ )
+    {
+        auto ptrToParamPtr = phaserParams[i];
+        *ptrToParamPtr = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter( phaserFuncs[i]() ));
+        jassert( *ptrToParamPtr != nullptr );
+    }
+    
 }
 
 Project13AudioProcessor::~Project13AudioProcessor()
@@ -135,7 +197,73 @@ juce::AudioProcessorValueTreeState::ParameterLayout
 {
         juce::AudioProcessorValueTreeState::ParameterLayout layout;
         
-        return layout;
+        const int versionHint = 1;
+        
+        //=======================================================================
+        // Phaser
+        //=======================================================================
+        /*
+         Phaser
+         Rate: hz
+         Depth: 0 to 1
+         Center freq: hz
+         Feedback: -1 to +1
+         Mix: 0 to 1
+         */
+
+        // phaser Rate: hz
+        auto name = getPhaserRateName();
+        layout.add(std::make_unique<juce::AudioParameterFloat>(
+               juce::ParameterID{name, versionHint},
+               name,
+               juce::NormalisableRange<float>(0.01f, 2.f, 0.01f, 1.f),
+               0.2f,
+               "Hz"));
+        // phaser Depth: 0 to 1
+        name = getPhaserDepthName();
+        layout.add(std::make_unique<juce::AudioParameterFloat>(
+               juce::ParameterID{name, versionHint},
+               name,
+               juce::NormalisableRange<float>(0.01f, 1.f, 0.01f, 1.f),
+               0.05f,
+               "%"));
+        // phaser Center freq: hz
+        name = getPhaserCenterFreqName();
+        layout.add(std::make_unique<juce::AudioParameterFloat>(
+               juce::ParameterID{name, versionHint},
+               name,
+               juce::NormalisableRange<float>(20.f, 20000.f, 1.f, 1.f),
+               1000.f,
+               "Hz"));
+        // phaser Feedback: -1 to +1
+        name = getPhaserFeedbackName();
+        layout.add(std::make_unique<juce::AudioParameterFloat>(
+               juce::ParameterID{name, versionHint},
+               name,
+               juce::NormalisableRange<float>(-1.f, 1.f, 0.01f, 1.f),
+               0.0f,
+               "%"));
+        // phaser Mix: 0 to 1
+        name = getPhaserMixName();
+        layout.add(std::make_unique<juce::AudioParameterFloat>(
+               juce::ParameterID{name, versionHint},
+               name,
+               juce::NormalisableRange<float>(0.01f, 1.f, 0.01f, 1.f),
+               0.05f,
+               "%"));
+
+        //=======================================================================
+        // Chorus
+        //=======================================================================
+        /*
+         Chorus
+         Rate: hz
+         Depth: 0 to 1
+         Center delay: hz
+         Feedback: -1 to +1
+         Mix: 0 to 1
+         */
+       return layout;
         
 }
 

@@ -72,6 +72,33 @@ public:
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "Settings", createParameterLayout() };
     
+    /*
+     Phaser
+     Rate: hz
+     Depth: 0 to 1
+     Center freq: hz
+     Feedback: -1 to +1
+     Mix: 0 to 1
+     */
+    juce::AudioParameterFloat* phaserRateHz = nullptr;
+    juce::AudioParameterFloat* phaserDepthPercent = nullptr;
+    juce::AudioParameterFloat* phaserCenterFreqHz = nullptr;
+    juce::AudioParameterFloat* phaserFeedbackPercent = nullptr;
+    juce::AudioParameterFloat* phaserMixPercent = nullptr;
+    /*
+     Chorus
+     Rate: hz
+     Depth: 0 to 1
+     Center delay: hz
+     Feedback: -1 to +1
+     Mix: 0 to 1
+     */
+    juce::AudioParameterFloat* chorusRateHz = nullptr;
+    juce::AudioParameterFloat* chorusDepthPercent = nullptr;
+    juce::AudioParameterFloat* chorusCenterDelayMs = nullptr;
+    juce::AudioParameterFloat* chorusFeedbackPercent = nullptr;
+    juce::AudioParameterFloat* chorusMixPercent = nullptr;
+    
 private:
     //==============================================================================
     // AHENRIQU: Started programming for Project13
