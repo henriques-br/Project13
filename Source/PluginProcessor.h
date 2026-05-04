@@ -72,8 +72,9 @@ public:
 private:
     //==============================================================================
     // AHENRIQU: Started programming for Project13
-    // https://www.youtube.com/watch?v=fmrLo9OF8bE&list=PLL4Pwd7fD7npBIpgp6Hwzod1PkjsbI0dW&index=54
-    // 25:57
+    // https://www.youtube.com/watch?v=fmrLo9OF8bE
+    // contine from https://www.youtube.com/watch?v=fmrLo9OF8bE&t=1561s
+    // 7. APVTS and TODOs
     DSP_Order dspOrder;
     
     template<typename DSP>
