@@ -86,6 +86,8 @@ public:
     juce::AudioParameterFloat* phaserCenterFreqHz = nullptr;
     juce::AudioParameterFloat* phaserFeedbackPercent = nullptr;
     juce::AudioParameterFloat* phaserMixPercent = nullptr;
+    juce::AudioParameterBool*  phaserBypass = nullptr;
+    
     /*
      Chorus
      Rate: hz
@@ -99,12 +101,14 @@ public:
     juce::AudioParameterFloat* chorusCenterDelayMs = nullptr;
     juce::AudioParameterFloat* chorusFeedbackPercent = nullptr;
     juce::AudioParameterFloat* chorusMixPercent = nullptr;
+    juce::AudioParameterBool*  chorusBypass = nullptr;
     
     /*
      Overdrive
      Drive: 1 to 100
      */
     juce::AudioParameterFloat* overdriveSaturation = nullptr;
+    juce::AudioParameterBool* overdriveBypass = nullptr;
     
     /*
      Ladder filter
@@ -117,7 +121,8 @@ public:
     juce::AudioParameterFloat* ladderFilterCutoffHz = nullptr;
     juce::AudioParameterFloat* ladderFilterResonance = nullptr;
     juce::AudioParameterFloat* ladderFilterDrive = nullptr;
-
+    juce::AudioParameterBool*  ladderFilterBypass = nullptr;
+    
     /*
      general filter: https://docs.juce.com/develop/structdsp_1_1IIR_1_1Coefficients.html
      Mode: Peak, bandpass, notch, allpass,
@@ -129,6 +134,8 @@ public:
     juce::AudioParameterFloat*  generalFilterFreqHz = nullptr;
     juce::AudioParameterFloat*  generalFilterQuality = nullptr;
     juce::AudioParameterFloat*  generalFilterGain = nullptr;
+    juce::AudioParameterBool*  generalFilterBypass = nullptr;
+
 private:
     //==============================================================================
     // AHENRIQU: Started programming for Project13
