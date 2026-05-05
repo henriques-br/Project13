@@ -99,12 +99,17 @@ public:
     juce::AudioParameterFloat* chorusFeedbackPercent = nullptr;
     juce::AudioParameterFloat* chorusMixPercent = nullptr;
     
+    /*
+     Overdrive
+     Drive: 1 to 100
+     */
+    juce::AudioParameterFloat* overdriveSaturation = nullptr;
 private:
     //==============================================================================
     // AHENRIQU: Started programming for Project13
     // https://www.youtube.com/watch?v=fmrLo9OF8bE
-    // contine from https://www.youtube.com/watch?v=fmrLo9OF8bE&t=1561s
-    // 7. APVTS and TODOs
+    // contine from https://www.youtube.com/watch?v=fmrLo9OF8bE&t=4483s
+    // 8. Overdrive
     DSP_Order dspOrder;
     
     template<typename DSP>
