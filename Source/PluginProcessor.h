@@ -63,6 +63,7 @@ public:
         Chorus,
         Overdrive,
         LadderFilter,
+        GeneralFilter,
         END_OF_LIST
     };
     
@@ -117,6 +118,17 @@ public:
     juce::AudioParameterFloat* ladderFilterResonance = nullptr;
     juce::AudioParameterFloat* ladderFilterDrive = nullptr;
 
+    /*
+     general filter: https://docs.juce.com/develop/structdsp_1_1IIR_1_1Coefficients.html
+     Mode: Peak, bandpass, notch, allpass,
+     freq: 20hz - 20,000hz in 1hz steps
+     Q: 0.1 - 10 in 0.5 steps
+     gain: -24db to +24db in 0.5db increments
+     */
+    juce::AudioParameterChoice* generalFilterMode = nullptr;
+    juce::AudioParameterFloat*  generalFilterFreqHz = nullptr;
+    juce::AudioParameterFloat*  generalFilterQuality = nullptr;
+    juce::AudioParameterFloat*  generalFilterGain = nullptr;
 private:
     //==============================================================================
     // AHENRIQU: Started programming for Project13
@@ -150,6 +162,7 @@ private:
     DSP_Choice<juce::dsp::Phaser<float>> phaser;
     DSP_Choice<juce::dsp::Chorus<float>> chorus;
     DSP_Choice<juce::dsp::LadderFilter<float>> overdrive, ladderFilter;
+    DSP_Choice<juce::dsp::IIR::Filter<float>> generalFilter;
     
     using DSP_Pointers = std::array<juce::dsp::ProcessorBase*,
         static_cast<size_t>(DSP_Option::END_OF_LIST)>;
