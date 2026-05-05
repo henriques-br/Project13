@@ -104,6 +104,19 @@ public:
      Drive: 1 to 100
      */
     juce::AudioParameterFloat* overdriveSaturation = nullptr;
+    
+    /*
+     Ladder filter
+     mode: LadderFilterMode enum (int)
+     cutoff: hz
+     resonance: 0 to 1
+     drive: 1 - 100
+     */
+    juce::AudioParameterChoice* ladderFilterMode = nullptr;
+    juce::AudioParameterFloat* ladderFilterCutoffHz = nullptr;
+    juce::AudioParameterFloat* ladderFilterResonance = nullptr;
+    juce::AudioParameterFloat* ladderFilterDrive = nullptr;
+
 private:
     //==============================================================================
     // AHENRIQU: Started programming for Project13
