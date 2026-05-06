@@ -136,6 +136,16 @@ public:
     juce::AudioParameterFloat*  generalFilterGain = nullptr;
     juce::AudioParameterBool*  generalFilterBypass = nullptr;
 
+    enum class GeneralFilterMode
+    {
+        Peak,
+        Bandpass,
+        Notch,
+        Allpass,
+        END_OF_LIST
+    };
+    
+    
 private:
     //==============================================================================
     // AHENRIQU: Started programming for Project13
@@ -180,8 +190,11 @@ private:
         
         void process(juce::dsp::AudioBlock<float> block, const DSP_Order& dspOrder);
         
-        private:
+    private:
         Project13AudioProcessor& p;
+
+        GeneralFilterMode filterMode = GeneralFilterMode::END_OF_LIST;
+        float filterFreq = 0.f, filterQ = 0.f, filterGain = -100.f;
     };
     
     MonoChannelDSP leftChannel { *this };
