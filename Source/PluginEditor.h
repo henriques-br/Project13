@@ -17,17 +17,17 @@
  */
 struct ExtendedTabbedButtonBar : juce::TabbedButtonBar, juce::DragAndDropTarget
 {
-    ExtendedTabbedButtonBar() : juce::TabbedButtonBar(juce::TabbedButtonBar::Orientation::TabsAtTop) {}
+    ExtendedTabbedButtonBar();
     
-    bool isInterestedInDragSource (const SourceDetails &dragSourceDetails) override { return false; }
-    void itemDropped(const SourceDetails &dragSourceDetails) override {}
+    bool isInterestedInDragSource (const SourceDetails& dragSourceDetails) override;
+    void itemDropped(const SourceDetails& dragSourceDetails) override;
     
     juce::TabBarButton* createTabButton(const juce::String& tabName, int tabIndex) override;
 };
 
-struct HorizontalContrainer : juce::ComponentBoundsConstrainer
+struct HorizontalConstrainer : juce::ComponentBoundsConstrainer
 {
-    HorizontalContrainer(std::function<juce::Rectangle<int>()> confinerBoundsGetter,
+    HorizontalConstrainer(std::function<juce::Rectangle<int>()> confinerBoundsGetter,
                          std::function<juce::Rectangle<int>()> confineeBoundsGetter);
     
 //    void dragComponent (Component* componentToDrag,
@@ -52,19 +52,11 @@ struct ExtendedTabBarButton : juce::TabBarButton
 {
     ExtendedTabBarButton(const juce::String& name, juce::TabbedButtonBar& owner);
     juce::ComponentDragger dragger;
-    std::unique_ptr<HorizontalContrainer> constrainer;
+    std::unique_ptr<HorizontalConstrainer> constrainer;
     
-    void mouseDown (const juce::MouseEvent& e)
-    {
-        toFront(true);
-        dragger.startDraggingComponent (this, e);
-        juce::TabBarButton::mouseDown(e);
-    }
-
-    void mouseDrag (const juce::MouseEvent& e)
-    {
-        dragger.dragComponent (this, e, constrainer.get());
-    }
+    void mouseDown (const juce::MouseEvent& e) override;
+    
+    void mouseDrag (const juce::MouseEvent& e) override;
 
 };
 
@@ -87,8 +79,8 @@ private:
     Project13AudioProcessor& audioProcessor;
     
     juce::TextButton dspOrderButton { "dsp order" };
-    ExtendedTabbedButtonBar tabbedComponent;
     
+    ExtendedTabbedButtonBar tabbedComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Project13AudioProcessorEditor)
 };
